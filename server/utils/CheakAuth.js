@@ -1,16 +1,17 @@
 import jwt from "jsonwebtoken"
 
 export default (req, res, next) => {
-    const token = (req.header.authorization || "").replace(/Bearer\s?/, "")
+    const token = (req.headers.authorization || "").replace(/Bearer\s?/, "")
 
     if (token) {
         try {
-            const decode = jwt.decode(token, "secret")
+            const decoded = jwt.verify(token, "secret")
 
-            req.userId = decode._id
+            req.userId = decoded.id
 
             next()
         } catch (err) {
+            console.log(err)
             return res.status(403).json({
                 message: "Ошибка"
             })

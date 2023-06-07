@@ -26,7 +26,7 @@ export const register = async (req, res) => {
 
         const token = jwt.sign({
             id: user._id
-        }, "secret", {expiresIn: 14})
+        }, "secret")
 
         res.json({
             token
@@ -57,9 +57,11 @@ export const login = async (req, res) => {
             })
         }
 
+        console.log(user._id)
+
         const token = jwt.sign({
             id: user._id
-        },"secret", {expiresIn: 14})
+        },"secret")
 
         res.json({
             message: "Авторизация успешна",
