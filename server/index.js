@@ -23,6 +23,11 @@ const app = express()
 
 app.use(express.json())
 
+// Начальный запуск
+app.get("/", (req, res) => {
+    res.send("Work!")
+})
+
 // Запросы пользователя
 app.post("/auth/login", loginValidation, login)
 app.post("/auth/register", registerValidation, register)
