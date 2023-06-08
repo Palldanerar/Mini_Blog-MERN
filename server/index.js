@@ -6,7 +6,7 @@ import {loginValidation} from "./validations/login.js";
 
 import CheakAuth from "./utils/CheakAuth.js";
 import {register, login, getMe} from "./controllers/UserController.js";
-import {createPost} from "./controllers/PostController.js";
+import {createPost, getAll, getOne} from "./controllers/PostController.js";
 import {postCreateValidation} from "./validations/post.js";
 import cheakAuth from "./utils/CheakAuth.js";
 
@@ -35,6 +35,9 @@ app.get("/auth/me", CheakAuth, getMe)
 
 //Запросы статей
 app.post("/posts", cheakAuth, postCreateValidation, createPost)
+app.get("/posts", cheakAuth, getAll)
+app.get("/post/:id", cheakAuth, getOne)
+
 app.listen(5600,(err) => {
     if (err) {
         console.log("Сервер не запустился!")

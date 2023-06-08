@@ -20,3 +20,38 @@ export const createPost = async (req, res) => {
         })
     }
 }
+
+export const getAll = async (req, res) => {
+    try {
+        const  posts = await PostModel.find().populate("user").exec()
+
+        res.json(posts)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: "Ошибка при получение статей"
+        })
+    }
+}
+
+export const getOne = async (req, res) => {
+    try {
+        const postId = req.params.id
+
+        PostModel.findOneAndUpdate({
+            _id: postId
+        },{
+            $inc: {viewsCount: 1}
+        },{
+            returnDocument: "after"
+        }).then(doc => {
+            res.json(doc)
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: "Ошибка при получение статьи"
+        })
+    }
+}
