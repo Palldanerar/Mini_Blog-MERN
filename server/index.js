@@ -1,6 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import multer from "multer"
+import cors from "cors"
 
 import {registerValidation} from "./validations/register.js"
 import {loginValidation} from "./validations/login.js";
@@ -35,6 +36,7 @@ const upload = multer({storage})
 
 app.use(express.json())
 app.use('/uploads', express.static("uploads"))
+app.use(cors())
 
 // Начальный запуск
 app.get("/", (req, res) => {
