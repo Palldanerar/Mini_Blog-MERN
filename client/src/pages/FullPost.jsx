@@ -1,32 +1,43 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import { Post } from "../components/Post";
+import {useParams} from "react-router-dom";
+import axios from "../axios";
 
 export const FullPost = () => {
+    const {id} = useParams()
+    const [post, setPosts] = useState()
+    const [isLoading, setIsLoading] = useState(true)
+
+
+    useEffect(() => {
+        console.log(1)
+        axios.get(`/post/6480cbf6edbbd5d1290df731`).then((res) => {
+            setPosts(res.data)
+            setIsLoading(false)
+        }).catch((err) => {
+            alert(err)
+        })
+    }, [])
+
+    if (!isLoading) {
+        return <Post isLoading={isLoading} />
+    }
+
   return (
     <>
       <Post
-        id={1}
-        title="Roast the code #1 | Rock Paper Scissors"
-        imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
-        user={{
-          avatarUrl:
-            "https://res.cloudinary.com/practicaldev/image/fetch/s--uigxYVRB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/187971/a5359a24-b652-46be-8898-2c5df32aa6e0.png",
-          fullName: "Keff",
-        }}
-        createdAt={"12 июня 2022 г."}
-        viewsCount={150}
-        commentsCount={3}
-        tags={["react", "fun", "typescript"]}
+          _id={post._id}
+          title={post.title}
+          imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+          user={post.user}
+          createdAt={post.createAdt}
+          viewsCount={post.viewsCount}
+          commentsCount={3}
+          tags={post.tags}
         isFullPost
       >
-        <p>
-          Hey there! 👋 I'm starting a new series called "Roast the Code", where
-          I will share some code, and let YOU roast and improve it. There's not
-          much more to it, just be polite and constructive, this is an exercise
-          so we can all learn together. Now then, head over to the repo and
-          roast as hard as you can!!
-        </p>
+        <p>{post.text}</p>
       </Post>
     </>
   );

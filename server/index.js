@@ -8,7 +8,7 @@ import {loginValidation} from "./validations/login.js";
 
 import CheckAuth from "./utils/CheckAuth.js";
 import {register, login, getMe} from "./controllers/UserController.js";
-import {create, getAll, getOne, remove, update} from "./controllers/PostController.js";
+import {create, getAll, getOne, remove, update, getLastTags} from "./controllers/PostController.js";
 import {postCreateValidation} from "./validations/post.js";
 import handleErrors from "./utils/handleErrors.js";
 
@@ -62,6 +62,9 @@ app.post("/upload", CheckAuth, upload.single('image'), (req, res) => {
         URL: `/uploads/${req.file.originalname}`
     })
 })
+
+// Запрос тегов
+app.get("/posts/tags", getLastTags)
 
 app.listen(5600,(err) => {
     if (err) {

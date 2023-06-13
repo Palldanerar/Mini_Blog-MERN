@@ -5,7 +5,7 @@ export const create = async (req, res) => {
         const doc = new PostModel({
             title: req.body.title,
             text: req.body.text,
-            tags: req.body.tags,
+            tags: req.body.tags.split(','),
             imageUrl: req.body.imageUrl,
             user: req.userId
         })
@@ -113,3 +113,21 @@ export const update = async (req, res) => {
         })
     }
 }
+
+export const getLastTags = async (req, res) => {
+    try {
+        const posts = await PostModel.find().limit(5).exec();
+
+        const tags = posts
+            .map((obj) => obj.tags)
+            .flat()
+            .slice(0, 5);
+
+        res.json(tags);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось получить тэги',
+        });
+    }
+};

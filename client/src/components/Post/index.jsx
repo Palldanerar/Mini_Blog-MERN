@@ -4,7 +4,6 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
@@ -18,7 +17,6 @@ export const Post = ({
   imageUrl,
   user,
   viewsCount,
-  commentsCount,
   tags,
   children,
   isFullPost,
@@ -70,10 +68,6 @@ export const Post = ({
             <li>
               <EyeIcon />
               <span>{viewsCount}</span>
-            </li>
-            <li>
-              <CommentIcon />
-              <span>{commentsCount}</span>
             </li>
           </ul>
         </div>
